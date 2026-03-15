@@ -1,4 +1,6 @@
-export const SAMPLE_MARKDOWN = [
+import type { AppLanguage } from "@/contexts/I18nContext";
+
+const KO_SAMPLE = [
   "# Markdown Editor 이렇게 써보세요",
   "",
   "이 편집기는 **실시간 프리뷰**를 지원하는 마크다운 편집기입니다. 왼쪽에 마크다운을 작성하면 오른쪽에서 즉시 결과를 확인할 수 있습니다.",
@@ -65,3 +67,82 @@ export const SAMPLE_MARKDOWN = [
   "",
   "*이 내용을 자유롭게 수정하고 마크다운의 다양한 기능을 시험해보세요!*",
 ].join("\n");
+
+const EN_SAMPLE = [
+  "# Markdown Editor Quick Start",
+  "",
+  "This editor provides a **live markdown preview**. Write markdown on the left and see the rendered result instantly on the right.",
+  "",
+  "## Basic Syntax",
+  "",
+  "### Text Styling",
+  "",
+  "Use **bold**, *italic*, and ~~strikethrough~~ styles.",
+  "",
+  "Inline code looks like `console.log(\"Hello\")`.",
+  "",
+  "### Links and Images",
+  "",
+  "Visit [GitHub](https://github.com).",
+  "",
+  "### Quotes",
+  "",
+  "> Good code is the best documentation.",
+  "> Most of the time, comments are unnecessary.",
+  "> — Steve McConnell",
+  "",
+  "### Lists",
+  "",
+  "**Unordered list:**",
+  "- First item",
+  "- Second item",
+  "  - Nested item",
+  "  - Another nested item",
+  "- Third item",
+  "",
+  "**Ordered list:**",
+  "1. Set up project",
+  "2. Write code",
+  "3. Run tests",
+  "4. Deploy",
+  "",
+  "### Code Block",
+  "",
+  "```javascript",
+  "function greet(name) {",
+  "  return `Hello, ${name}!`;",
+  "}",
+  "",
+  "console.log(greet(\"world\"));",
+  "```",
+  "",
+  "### Table",
+  "",
+  "| Feature | Shortcut | Description |",
+  "|---------|----------|-------------|",
+  "| Save | Ctrl+S | Auto-saved |",
+  "| Download | - | Download MD file |",
+  "| Theme | - | Toggle dark/light |",
+  "",
+  "### Checklist",
+  "",
+  "- [x] Build markdown editor",
+  "- [x] Add live preview",
+  "- [x] Support dark mode",
+  "- [ ] Add more features",
+  "",
+  "---",
+  "",
+  "*Feel free to edit this content and explore markdown features!*",
+].join("\n");
+
+export const SAMPLE_MARKDOWN_BY_LANGUAGE: Record<AppLanguage, string> = {
+  ko: KO_SAMPLE,
+  en: EN_SAMPLE,
+};
+
+export function getSampleMarkdown(language: AppLanguage): string {
+  return SAMPLE_MARKDOWN_BY_LANGUAGE[language];
+}
+
+export const SAMPLE_MARKDOWN = KO_SAMPLE;

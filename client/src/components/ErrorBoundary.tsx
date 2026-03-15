@@ -1,9 +1,12 @@
 import { cn } from "@/lib/utils";
+import { useI18n } from "@/contexts/I18nContext";
 import { AlertTriangle, RotateCcw } from "lucide-react";
 import { Component, ReactNode } from "react";
 
 interface Props {
   children: ReactNode;
+  title: string;
+  reloadLabel: string;
 }
 
 interface State {
@@ -11,7 +14,7 @@ interface State {
   error: Error | null;
 }
 
-class ErrorBoundary extends Component<Props, State> {
+class ErrorBoundaryInner extends Component<Props, State> {
   constructor(props: Props) {
     super(props);
     this.state = { hasError: false, error: null };
@@ -31,7 +34,7 @@ class ErrorBoundary extends Component<Props, State> {
               className="text-destructive mb-6 flex-shrink-0"
             />
 
-            <h2 className="text-xl mb-4">An unexpected error occurred.</h2>
+            <h2 className="text-xl mb-4">{this.props.title}</h2>
 
             <div className="p-4 w-full rounded bg-muted overflow-auto mb-6">
               <pre className="text-sm text-muted-foreground whitespace-break-spaces">
@@ -46,9 +49,9 @@ class ErrorBoundary extends Component<Props, State> {
                 "bg-primary text-primary-foreground",
                 "hover:opacity-90 cursor-pointer"
               )}
-            >
+              >
               <RotateCcw size={16} />
-              Reload Page
+              {this.props.reloadLabel}
             </button>
           </div>
         </div>
@@ -59,4 +62,15 @@ class ErrorBoundary extends Component<Props, State> {
   }
 }
 
-export default ErrorBoundary;
+export default function ErrorBoundary({ children }: { children: ReactNode }) {
+  const { t } = useI18n();
+
+  return (
+    <ErrorBoundaryInner
+      title={t("errorBoundaryTitle")}
+      reloadLabel={t("errorBoundaryReload")}
+    >
+      {children}
+    </ErrorBoundaryInner>
+  );
+}

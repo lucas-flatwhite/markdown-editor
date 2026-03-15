@@ -31,10 +31,17 @@ export const FILE_ACCEPT = SUPPORTED_EXTENSIONS.map((ext) => `.${ext}`).join(
   ","
 );
 
+export type FileCategory =
+  | "hwp"
+  | "html"
+  | "txt"
+  | "docx"
+  | "pdf"
+  | "image"
+  | "unknown";
+
 /** 확장자별 카테고리 */
-function getFileCategory(
-  ext: string
-): "hwp" | "html" | "txt" | "docx" | "pdf" | "image" | "unknown" {
+function getFileCategory(ext: string): FileCategory {
   if (ext === "hwp" || ext === "hwpx") return "hwp";
   if (ext === "html" || ext === "htm") return "html";
   if (ext === "txt") return "txt";
@@ -131,41 +138,19 @@ async function convertImage(file: File): Promise<string> {
   return text;
 }
 
-/** 파일 카테고리별 설명 텍스트 */
-function getCategoryLabel(
-  category: "hwp" | "html" | "txt" | "docx" | "pdf" | "image" | "unknown"
-): string {
-  switch (category) {
-    case "hwp":
-      return "HWP/HWPX";
-    case "html":
-      return "HTML";
-    case "txt":
-      return "텍스트";
-    case "docx":
-      return "DOCX";
-    case "pdf":
-      return "PDF";
-    case "image":
-      return "이미지 (OCR)";
-    default:
-      return "알 수 없는 형식";
-  }
-}
-
 /**
  * 파일을 마크다운으로 변환하는 메인 함수
  */
 export async function convertFileToMarkdown(file: File): Promise<{
   markdown: string;
-  category: string;
+  category: Exclude<FileCategory, "unknown">;
 }> {
   const ext = file.name.split(".").pop()?.toLowerCase() || "";
   const category = getFileCategory(ext);
 
   if (category === "unknown") {
     throw new Error(
-      `지원하지 않는 파일 형식입니다. 지원 형식: ${SUPPORTED_EXTENSIONS.join(", ")}`
+      `Unsupported file type. Supported types: ${SUPPORTED_EXTENSIONS.join(", ")}`
     );
   }
 
@@ -194,6 +179,6 @@ export async function convertFileToMarkdown(file: File): Promise<{
 
   return {
     markdown,
-    category: getCategoryLabel(category),
+    category,
   };
 }

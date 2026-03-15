@@ -20,6 +20,9 @@ This project focuses on fast markdown authoring with immediate visual feedback a
 - Mobile tab switcher for editor and preview.
 - Auto-save with debounce to `localStorage`.
 - Theme toggle (`light`/`dark`).
+- Bilingual UI (`English` / `Korean`) with language preference persistence.
+- Runtime `<html lang>` synchronization based on selected language.
+- Localized sample markdown content for both `en` and `ko`.
 - Sync-scroll between editor and preview.
 - Markdown copy and `.md` file download.
 - File import and conversion:
@@ -45,6 +48,7 @@ The UI follows a Swiss typographic minimalism approach:
 - Styling/UI: Tailwind CSS 4, shadcn/ui, Radix UI
 - Markdown pipeline: marked, highlight.js, DOMPurify
 - Conversion libs: turndown, mammoth, pdfjs-dist, tesseract.js, jszip
+- i18n: custom React context-based localization (`en` / `ko`)
 - Server: Express (static serving for production build)
 - Testing: Vitest
 
@@ -90,6 +94,7 @@ bun run start
 2. Unit tests for critical logic:
    - Markdown rendering behavior (code block highlighting, table wrapper).
    - File conversion behavior (TXT/HTML success paths, unsupported extension errors).
+   - Localization behavior (language selection and translation mapping).
 3. Production bundle verification with Vite and server bundling.
 
 ### Commands
@@ -108,6 +113,11 @@ bun run build
 - `VITE_ANALYTICS_WEBSITE_ID`
 
 If not set, Vite emits warnings during build. This does not block the build.
+
+Optional debug collector:
+
+- `DEBUG_COLLECTOR=true` enables debug log collector script in development mode.
+- Debug logs are written into `.debug-logs/`.
 
 ## License
 

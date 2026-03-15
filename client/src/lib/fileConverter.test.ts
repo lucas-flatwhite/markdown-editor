@@ -18,7 +18,7 @@ describe("fileConverter", () => {
 
     const result = await convertFileToMarkdown(file);
     expect(result.markdown).toBe("plain text");
-    expect(result.category).toBe("텍스트");
+    expect(result.category).toBe("txt");
   });
 
   it("converts HTML files into markdown content", async () => {
@@ -34,7 +34,7 @@ describe("fileConverter", () => {
     );
 
     const result = await convertFileToMarkdown(file);
-    expect(result.category).toBe("HTML");
+    expect(result.category).toBe("html");
     expect(result.markdown).toContain("# Title");
     expect(result.markdown).toContain("Hello world");
     expect(result.markdown).not.toContain("<title>");
@@ -46,7 +46,7 @@ describe("fileConverter", () => {
     });
 
     await expect(convertFileToMarkdown(file)).rejects.toThrow(
-      "지원하지 않는 파일 형식입니다."
+      "Unsupported file type."
     );
   });
 });
