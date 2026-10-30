@@ -111,3 +111,6 @@ temp/
 
 # Debug collector outputs
 .debug-logs/
+
+# Superpowers docs
+docs/superpowers/
